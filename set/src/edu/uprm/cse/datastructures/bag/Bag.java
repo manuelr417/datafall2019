@@ -16,5 +16,6 @@ public interface Bag<E> {
     public int count(E e);
     
     public void clear();
-
+    
+    public E[] toArray();
 }

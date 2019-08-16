@@ -1,5 +1,5 @@
 package edu.uprm.cse.datastructures.set.test;
-
+// comment for eclipse to work
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -44,7 +44,9 @@ public class ArraySetTest {
 
 	@Test
 	public void testAdd() {
-		fail("Not yet implemented");
+		assertFalse(S1.isMember("Cal"));
+		S1.add("Cal");
+		assertTrue(S1.isMember("Cal"));
 	}
 
 	@Test
@@ -58,7 +60,11 @@ public class ArraySetTest {
 
 	@Test
 	public void testRemove() {
-		fail("Not yet implemented");
+		assertTrue(S2.isMember("Amy"));
+		assertTrue(S2.remove("Amy"));
+		assertFalse(S2.isMember("Amy"));
+		assertFalse(S1.remove("Lu"));
+
 	}
 
 	@Test
@@ -91,12 +97,35 @@ public class ArraySetTest {
 
 	@Test
 	public void testDifference() {
-		fail("Not yet implemented");
+		Set<String> S3 = null;
+		S3 = S1.difference(S2);
+		assertTrue(S3.isMember("Ken"));
+		assertTrue(S3.isMember("Jil"));
+		assertTrue(S3.isMember("Ron"));
+		assertFalse(S3.isMember("Ned"));
+		
+		S3 = S2.difference(S1);
+		assertTrue(S3.isMember("Amy"));
+		assertTrue(S3.size()==1);
+
+		assertTrue(S1.difference(S1).isEmpty());
 	}
 
 	@Test
 	public void testIntersection() {
-		fail("Not yet implemented");
+		Set<String> S3 = null;
+		S3 = S1.intersection(S2);
+		assertTrue(S3.isMember("Bob"));
+		assertTrue(S3.isMember("Ned"));
+		assertTrue(S3.size() == 2);
+
+		S3 = S2.intersection(S1);
+		assertTrue(S3.isMember("Bob"));
+		assertTrue(S3.isMember("Ned"));
+		assertTrue(S3.size() == 2);
+
+
+
 	}
 
 }

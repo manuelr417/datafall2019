@@ -95,4 +95,15 @@ public class DynamicBag<E> implements Bag<E>{
         }
         this.currentSize = 0;           
 	}
+
+	@Override
+	public E[] toArray() {
+		E result[] = (E[]) new Object[this.size()];
+		
+		for (int i=0; i < this.size(); ++i) {
+			result[i]  = this.elements[i];
+		}
+		
+		return result;
+	}
 }
