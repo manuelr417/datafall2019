@@ -31,7 +31,8 @@ public class ArrayListTest {
 
 	@Test
 	public void testIsEmpty() {
-		fail("Not yet implemented");
+		this.L.clear();
+		assertTrue("Fails to detect empty list", this.L.isEmpty());
 	}
 
 	@Test
