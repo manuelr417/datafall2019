@@ -1,0 +1,27 @@
+package edu.uprm.cse.datastructures.list;
+
+public interface List<E> {
+	
+	public int size();
+	
+	public boolean isEmpty();
+	
+	public boolean isMember(E e);
+	
+	public int indexOf(E e);
+	
+	public void add(E e);
+	
+	public void add(E e, int position);
+	
+	public E get(int position);
+	
+	public E remove(int position);
+	
+	public E replace(int position, E newElement);
+	
+	public void clear();
+	
+	public E[] toArray();	
+
+}
