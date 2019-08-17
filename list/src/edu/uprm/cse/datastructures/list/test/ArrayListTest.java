@@ -32,6 +32,7 @@ public class ArrayListTest {
 	@Test
 	public void testIsEmpty() {
 		this.L.clear();
+		//
 		assertTrue("Fails to detect empty list", this.L.isEmpty());
 	}
 
