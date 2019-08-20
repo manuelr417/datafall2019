@@ -29,7 +29,7 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public boolean isMember(E e) {
-		return this.indexOf(e) > 0;
+		return this.indexOf(e) >= 0;
 	}
 
 	@Override
@@ -114,15 +114,18 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public void clear() {
-		while(this.remove(0) != null);
+		while(!this.isEmpty()) {
+			this.remove(0);
+		}
 	}
 
 	@Override
 	public E[] toArray() {
 		E[] result = (E[]) new Object[this.size()];
-		for (int i=0; i < this.size(); ++i) {
-			result[i] = this.elements[i];
-		}
+		System.arraycopy(this.elements, 0, result, 0, this.size());
+//		for (int i=0; i < this.size(); ++i) {
+//			result[i] = this.elements[i];
+//		}
 		return result;
 	}
 
