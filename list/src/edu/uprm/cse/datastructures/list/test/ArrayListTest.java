@@ -45,9 +45,9 @@ public class ArrayListTest {
 
 	@Test
 	public void testIndexOf() {
-		assertTrue("Fails to detect Kim at position 0", this.L.indexOf("Kim") ==0);
-		assertTrue("Fails to detect Ron at position 2", this.L.indexOf("Ron") ==2);
-		assertTrue("Fails to detect that Xi is has negative index ", this.L.indexOf("Xi") < 0);
+		assertTrue("Fails to detect Kim at position 0", this.L.firstIndexOf("Kim") ==0);
+		assertTrue("Fails to detect Ron at position 2", this.L.firstIndexOf("Ron") ==2);
+		assertTrue("Fails to detect that Xi is has negative index ", this.L.firstIndexOf("Xi") < 0);
 
 	}
 
@@ -56,7 +56,7 @@ public class ArrayListTest {
 		this.L.add("Xi");
 		assertTrue("Fails to detect Xi in the list", this.L.isMember("Xi"));
 		this.L.add("Moe");
-		assertTrue("Fails to detect Moe at position 7", this.L.indexOf("Moe") ==7);
+		assertTrue("Fails to detect Moe at position 7", this.L.firstIndexOf("Moe") ==7);
 
 	}
 
@@ -64,12 +64,12 @@ public class ArrayListTest {
 	public void testAddEInt() {
 		this.L.add("Xi", 0);
 		assertTrue("Fails to detect Xi in the list", this.L.isMember("Xi"));
-		assertTrue("Fails to detect Kim at position 1", this.L.indexOf("Kim") ==1);
+		assertTrue("Fails to detect Kim at position 1", this.L.firstIndexOf("Kim") ==1);
 		
-		assertTrue("Fails to detect Jil at position 4", this.L.indexOf("Jil") ==4);
+		assertTrue("Fails to detect Jil at position 4", this.L.firstIndexOf("Jil") ==4);
 		this.L.add("Moe", 4);
-		assertTrue("Fails to detect Moe at position 4", this.L.indexOf("Moe") ==4);
-		assertTrue("Fails to detect Jil at position 5", this.L.indexOf("Jil") ==5);
+		assertTrue("Fails to detect Moe at position 4", this.L.firstIndexOf("Moe") ==4);
+		assertTrue("Fails to detect Jil at position 5", this.L.firstIndexOf("Jil") ==5);
 
 	}
 

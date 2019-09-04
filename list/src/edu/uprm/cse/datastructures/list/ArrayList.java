@@ -1,7 +1,39 @@
 package edu.uprm.cse.datastructures.list;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class ArrayList<E> implements List<E> {
-	
+	private class ArrayListIterator<E> implements Iterator<E> {
+		
+		private int currentPosition;
+		
+		
+
+		public ArrayListIterator() {
+			super();
+			this.currentPosition = 0;
+			
+		}
+
+		@Override
+		public boolean hasNext() {
+			return this.currentPosition < currentSize;
+		}
+
+		@Override
+		public E next() {
+			if (this.hasNext()) {
+				E result = (E) elements[this.currentPosition++]; // elements is array in enclosing class
+				return result;
+			}
+			else {
+				throw new NoSuchElementException();
+			}
+		}
+		
+	}
+ 	
 	private E[] elements;
 	private int currentSize;
 	private static final int DEFAULT_SIZE = 10;
@@ -127,6 +159,11 @@ public class ArrayList<E> implements List<E> {
 //			result[i] = this.elements[i];
 //		}
 		return result;
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		return new ArrayListIterator<E>();
 	}
 
 }

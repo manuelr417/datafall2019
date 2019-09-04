@@ -1,6 +1,6 @@
 package edu.uprm.cse.datastructures.list;
 
-public interface List<E> {
+public interface List<E> extends Iterable<E> {
 	
 	public int size();
 	
