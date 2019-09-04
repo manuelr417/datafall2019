@@ -54,11 +54,11 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean isMember(E e) {
-		return this.indexOf(e) >= 0;
+		return this.firstIndexOf(e) >= 0;
 	}
 
 	@Override
-	public int indexOf(E e) {
+	public int firstIndexOf(E e) {
 		int i = 0;
 		for (Node<E> temp = this.header.getNext(); temp != null; 
 				temp = temp.getNext(), ++i) {
@@ -66,6 +66,7 @@ public class SinglyLinkedList<E> implements List<E> {
 				return i;
 			}
 		}
+		// not found
 		return -1;
 	}
 
@@ -88,11 +89,15 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public E get(int position) {
+		if ((position < 0) || position >= this.currentSize) {
+			throw new IndexOutOfBoundsException();
+		}
+		int i=0;
+		Node<E> temp  = null;
 		
-//		for (Node<E> temp = this.header.getNext(); ) {
-//			
-//		}
-		return null;
+		for (temp = this.header.getNext(); i != position; temp = temp.getNext(), ++i);
+		return temp.getElement();
+		
 	}
 
 	
@@ -116,8 +121,8 @@ public class SinglyLinkedList<E> implements List<E> {
 	}
 
 	@Override
-	public E[] toArray() {
-		E[] result = (E[]) new Object[this.size()];
+	public Object[] toArray() {
+		Object[] result =  new Object[this.size()];
 		return result;
 	}
 
@@ -126,6 +131,20 @@ public class SinglyLinkedList<E> implements List<E> {
 	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public int lastIndexOf(E e) {
+		int i = 0, result = -1;
+		for (Node<E> temp = this.header.getNext(); temp != null; 
+				temp = temp.getNext(), ++i) {
+			if (temp.getElement().equals(e)) {
+				result = i;
+			}
+		}
+		// not found
+		return result;
 	}
 
 }

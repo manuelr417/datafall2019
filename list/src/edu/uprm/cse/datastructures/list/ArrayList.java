@@ -61,11 +61,11 @@ public class ArrayList<E> implements List<E> {
 
 	@Override
 	public boolean isMember(E e) {
-		return this.indexOf(e) >= 0;
+		return this.firstIndexOf(e) >= 0;
 	}
 
 	@Override
-	public int indexOf(E e) {
+	public int firstIndexOf(E e) {
 		for (int i=0; i < this.size(); ++i) {
 			if (this.elements[i].equals(e)) {
 				return i;
@@ -102,8 +102,8 @@ public class ArrayList<E> implements List<E> {
 			if (this.size() == this.elements.length) {
 				this.reAllocate();
 			}
-			for (int i=this.currentSize-1; i >= position; --i) {
-				this.elements[i+1] = this.elements[i];
+			for (int i=this.currentSize; i > position; --i) {
+				this.elements[i] = this.elements[i-1];
 			}
 			this.elements[position] = e;
 			this.currentSize++;
@@ -152,8 +152,8 @@ public class ArrayList<E> implements List<E> {
 	}
 
 	@Override
-	public E[] toArray() {
-		E[] result = (E[]) new Object[this.size()];
+	public Object[] toArray() {
+		Object[] result = (E[]) new Object[this.size()];
 		System.arraycopy(this.elements, 0, result, 0, this.size());
 //		for (int i=0; i < this.size(); ++i) {
 //			result[i] = this.elements[i];
@@ -164,6 +164,17 @@ public class ArrayList<E> implements List<E> {
 	@Override
 	public Iterator<E> iterator() {
 		return new ArrayListIterator<E>();
+	}
+
+	@Override
+	public int lastIndexOf(E e) {
+		for (int i=this.currentSize-1; i>= 0; --i) {
+			if (this.elements[i].equals(e)) {
+				return i;
+			}
+		}
+		// not found
+		return -1;
 	}
 
 }
