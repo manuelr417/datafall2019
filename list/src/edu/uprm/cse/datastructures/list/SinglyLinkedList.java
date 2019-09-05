@@ -92,14 +92,19 @@ public class SinglyLinkedList<E> implements List<E> {
 		if ((position < 0) || position >= this.currentSize) {
 			throw new IndexOutOfBoundsException();
 		}
-		int i=0;
-		Node<E> temp  = null;
 		
-		for (temp = this.header.getNext(); i != position; temp = temp.getNext(), ++i);
+		Node<E> temp  = this.getPosition(position);
 		return temp.getElement();
 		
 	}
 
+	private Node<E> getPosition(int position){
+		int i=0;
+		Node<E> temp  = null;
+		for (temp = this.header.getNext(); i != position; temp = temp.getNext(), ++i);
+		return temp;
+
+	}
 	
 	@Override
 	public E remove(int position) {
@@ -109,8 +114,14 @@ public class SinglyLinkedList<E> implements List<E> {
 
 	@Override
 	public E replace(int position, E newElement) {
-		// TODO Auto-generated method stub
-		return null;
+		if ((position < 0) || position >= this.currentSize) {
+			throw new IndexOutOfBoundsException();
+		}
+		Node<E> temp  = this.getPosition(position);
+		E result = temp.getElement();
+		temp.setElement(newElement);
+		return temp.getElement();
+		
 	}
 
 	@Override
@@ -123,6 +134,11 @@ public class SinglyLinkedList<E> implements List<E> {
 	@Override
 	public Object[] toArray() {
 		Object[] result =  new Object[this.size()];
+		int i;
+		Node<E> temp;
+		for (i=0, temp = this.header.getNext(); temp != null; i++, temp  = temp.getNext()) {
+			result[i] = temp.getElement();
+		}
 		return result;
 	}
 
