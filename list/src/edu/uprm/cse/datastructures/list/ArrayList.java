@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ArrayList<E> implements List<E> {
+	@SuppressWarnings("hiding")
 	private class ArrayListIterator<E> implements Iterator<E> {
 		
 		private int currentPosition;
@@ -175,6 +176,28 @@ public class ArrayList<E> implements List<E> {
 		}
 		// not found
 		return -1;
+	}
+
+	@Override
+	public boolean remove(E e) {
+		int target = this.firstIndexOf(e);
+		if (target < 0) {
+			return false;
+		}
+		else {
+			this.remove(target);
+			return true;
+		}
+	}
+
+	@Override
+	public int removeAll(E e) {
+		int result=0;
+		
+		while(this.remove(e)) {
+			result++;
+		}
+		return result;
 	}
 
 }

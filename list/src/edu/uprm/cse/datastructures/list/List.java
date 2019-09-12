@@ -14,13 +14,17 @@ public interface List<E> extends Iterable<E> {
 
 	public void add(E e);
 	
-	public void add(E e, int position);
+	public void add(E e, int index);
 	
-	public E get(int position);
+	public E get(int index);
 	
-	public E remove(int position);
+	public E remove(int index);
 	
-	public E replace(int position, E newElement);
+    public boolean remove(E e);
+    
+    public int removeAll(E e);
+    
+	public E replace(int index, E newElement);
 	
 	public void clear();
 	

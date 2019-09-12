@@ -4,11 +4,14 @@ import java.util.Iterator;
 
 import edu.uprm.cse.datastructures.list.ArrayList;
 import edu.uprm.cse.datastructures.list.List;
+import edu.uprm.cse.datastructures.list.SinglyLinkedList;
 
 public class TestIterate {
 
 	public static void main(String[] args) {
-		List<String> L = new ArrayList<String>();
+		//List<String> L = new ArrayList<String>();
+		List<String> L = new SinglyLinkedList<String>();
+
 		L.add("Kim");
 		L.add("Ned");
 		L.add("Ron");
