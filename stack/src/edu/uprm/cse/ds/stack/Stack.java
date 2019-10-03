@@ -1,5 +1,7 @@
 package edu.uprm.cse.ds.stack;
 
+import java.io.PrintStream;
+
 public interface Stack<E> {
 	
 	public int size();
@@ -13,4 +15,7 @@ public interface Stack<E> {
 	public void push(E e);
 	
 	public void clear();
+	
+	public void print(PrintStream out);
+	
 }

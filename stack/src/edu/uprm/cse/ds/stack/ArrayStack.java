@@ -1,5 +1,8 @@
 package edu.uprm.cse.ds.stack;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 public class ArrayStack<E> implements Stack<E> {
 	
 	private E[] elements;
@@ -70,6 +73,15 @@ public class ArrayStack<E> implements Stack<E> {
 		
 		// on line?
 		//while (!(this.pop() == null));
+	}
+
+
+	@Override
+	public void print(PrintStream out) {
+		for (int i=this.size()-1; i>=0; --i) {
+			out.println(this.elements[i]);
+		}
+		
 	}
 
 }

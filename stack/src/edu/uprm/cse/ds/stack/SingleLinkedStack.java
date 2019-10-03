@@ -1,5 +1,6 @@
 package edu.uprm.cse.ds.stack;
 
+import java.io.PrintStream;
 
 public class SingleLinkedStack<E> implements Stack<E> {
 
@@ -89,6 +90,16 @@ public class SingleLinkedStack<E> implements Stack<E> {
 	public void clear() {
 		while (this.pop() !=null);
 
+	}
+
+	@Override
+	public void print(PrintStream out) {
+		Node<E> temp = this.header.getNext();
+		while(temp != null) {
+			out.println(temp.getElement());
+			temp = temp.getNext();
+		}
+		
 	}
 
 }
