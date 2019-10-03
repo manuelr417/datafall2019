@@ -13,4 +13,6 @@ This should enable you to open the project.
 # Available Projects
 1. bag - Bag ADT implemented with arrays
 2. set - Set ADT implemented with generics, arrays, and object composition via bags.
-3. list - List ADA implemented with generics, arrays, and singly linked lists
+3. list - List ADT implemented with generics, arrays, and singly linked lists.
+4. stack - Stack ADT implemented with generics, arrays, and singly linked lists.
+5. queue - Queue ADT implemented with generics, circular arrays, and doubly linked lists.
