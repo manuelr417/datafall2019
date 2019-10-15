@@ -1,5 +1,7 @@
 package edu.uprm.cse.ds.queue;
 
+import java.io.PrintStream;
+
 public class DoublyLinkedQueue<E> implements Queue<E> {
 	
 	private static class Node<E>{
@@ -95,6 +97,16 @@ public class DoublyLinkedQueue<E> implements Queue<E> {
 	public void makeEmpty() {
 		while (this.dequeue() != null);
 
+	}
+
+	@Override
+	public void print(PrintStream P) {
+		Node<E> temp = this.header.getNext();
+		while (temp != this.tail) {
+			P.println(temp.getElement());
+			temp = temp.getNext();
+		}
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package edu.uprm.cse.ds.queue;
 
+import java.io.PrintStream;
+
 public interface Queue<E> {
 	
 	public int size();
@@ -14,5 +16,6 @@ public interface Queue<E> {
 	
 	public void makeEmpty();
 	
+	public void print(PrintStream P);
 
 }
