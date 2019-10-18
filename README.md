@@ -16,3 +16,5 @@ This should enable you to open the project.
 3. list - List ADT implemented with generics, arrays, and singly linked lists.
 4. stack - Stack ADT implemented with generics, arrays, and singly linked lists.
 5. queue - Queue ADT implemented with generics, circular arrays, and doubly linked lists.
+6. map - Map ADT implemented with generics, and singly linked lists.
+7. hashtable - Map ADT implemented with generics, and hash tables. 
