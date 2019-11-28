@@ -1,13 +1,16 @@
 package edu.uprm.cse.ds.bst;
 
+import java.io.PrintStream;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import edu.uprm.cse.ds.list.List;
+import edu.uprm.cse.ds.list.SinglyLinkedList;
 import edu.uprm.cse.ds.map.Map;
 
 public class BinarySearchTree<K, V> implements Map<K, V> {
 	
-	private static class MapEntry<K,V> {
+	private static class MapEntry<K,V> implements KeyValuePair<K,V> {
 		private K key;
 		private V value;
 		
@@ -31,7 +34,8 @@ public class BinarySearchTree<K, V> implements Map<K, V> {
 		}		
 
 	}
-
+		
+	
 	private int currentSize;
 	private BinaryTreeNode<MapEntry<K,V>> root;
 	private Comparator<K> keyComparator;
@@ -144,8 +148,19 @@ public class BinarySearchTree<K, V> implements Map<K, V> {
 					return result;
 					
 				}
+				else if (this.root.getRightChild() == null) {
+					V result = this.root.getValue().getValue();
+					this.root = this.root.getLeftChild();
+					this.currentSize--;
+					return result;
+				}
 				else {
-					return null;
+					V result = this.root.getValue().getValue();
+					BinaryTreeNodeImp<MapEntry<K, V>> S = 
+							this.smallestChild((BinaryTreeNodeImp<MapEntry<K, V>>) this.root.getRightChild());
+					((BinaryTreeNodeImp<MapEntry<K, V>>) this.root).setValue(S.getValue());;
+					this.removeAux(S.getValue().getKey(), this.root.getRightChild());
+					return result;
 				}
 			}
 			else if (comparison < 0) {
@@ -186,14 +201,65 @@ public class BinarySearchTree<K, V> implements Map<K, V> {
 
 	@Override
 	public List<K> getKeys() {
-		// TODO Auto-generated method stub
-		return null;
+		List<K> result = new SinglyLinkedList<K>();
+		this.getKeysAux(this.root, result);
+		return result;
+		
+	}
+
+	private void getKeysAux(BinaryTreeNode<MapEntry<K, V>> N, List<K> result) {
+		if (N == null) {
+			return;
+		}
+		else {
+			this.getKeysAux(N.getLeftChild(), result);
+			result.add(N.getValue().getKey());
+			this.getKeysAux(N.getRightChild(), result);
+		}
 	}
 
 	@Override
 	public List<V> getValues() {
-		// TODO Auto-generated method stub
-		return null;
+		List<V> result = new SinglyLinkedList<V>();
+		this.getValuesAux(this.root, result);
+		return result;
+		
+
+	}
+
+	private void getValuesAux(BinaryTreeNode<MapEntry<K, V>> N, List<V> result) {
+		if (N == null) {
+			return;
+		}
+		else {
+			this.getValuesAux(N.getLeftChild(), result);
+			result.add(N.getValue().getValue());
+			this.getValuesAux(N.getRightChild(), result);
+		}
+		
+	}
+
+	public void print(PrintStream out) {
+		printAux(this.root, out, 0);
+		
+		
+	}
+	
+	public void printAux(BinaryTreeNode<MapEntry<K, V>> N, 
+			PrintStream out, int spaces) {
+		if (N == null) {
+			return;
+		}
+		else {
+			printAux(N.getRightChild(), out, spaces + 4);
+			// print this values
+			for (int i=0; i< spaces; ++i) {
+				out.print(" ");
+			}
+			out.println(N.getValue().getKey());
+			printAux(N.getLeftChild(), out, spaces + 4);
+			
+		}
 	}
 
 }
