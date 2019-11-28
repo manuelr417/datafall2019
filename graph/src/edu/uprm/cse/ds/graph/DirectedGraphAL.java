@@ -2,6 +2,10 @@ package edu.uprm.cse.ds.graph;
 
 import edu.uprm.cse.ds.list.List;
 import edu.uprm.cse.ds.list.SinglyLinkedList;
+import edu.uprm.cse.ds.queue.DoublyLinkedQueue;
+import edu.uprm.cse.ds.queue.Queue;
+import edu.uprm.cse.ds.util.OrderedPair;
+import edu.uprm.cse.ds.util.OrderedPairImp;
 
 public class DirectedGraphAL<E> implements Graph<E> {
 	
@@ -129,8 +133,70 @@ public class DirectedGraphAL<E> implements Graph<E> {
 	}
 
 	@Override
-	public Iterable<Vertex<E>> depthFirstSearch(E label) {
-		// TODO Auto-generated method stub
-		return null;
+	public OrderedPair<Iterable<Vertex<E>>, Integer> depthFirstSearch(E label) {
+		if (!this.containsVertex(label)) {
+			// avoid bugs by throwing an exception here
+			// do not run dfs on non existing vertex
+			throw new IllegalArgumentException("No vertex with the given label exits."); 
+		}
+		else {
+			List<Vertex<E>> L = new SinglyLinkedList<Vertex<E>>();
+			OrderedPair<Iterable<Vertex<E>>, Integer> result = null;
+			Vertex<E> u = this.getVertex(label);
+
+			int count = 0;
+			this.dfsAux(u, L);
+			count = L.size();
+			result = new OrderedPairImp<>(L, count);
+			return result;
+		}
 	}
+
+	private void dfsAux(Vertex<E> u, List<Vertex<E>> L) {
+		Vertex<E> v = null;
+		// mark u as visited
+		u.visit();
+		//now loop adding what is reachable 
+		for (Edge<E> e : u.edges()) {
+			v = e.getEndVertex();
+			if (!v.isVisited()) {
+				L.add(v);
+				this.dfsAux(e.getEndVertex(), L);
+			}
+		}	
+	}
+
+	@Override
+	public OrderedPair<Iterable<Vertex<E>>, Integer> breathFirstSearch(E label) {
+		if (!this.containsVertex(label)) {
+			// avoid bugs by throwing an exception here
+			// do not run dfs on non existing vertex
+			throw new IllegalArgumentException("No vertex with the given label exits."); 
+		}
+		else {
+			List<Vertex<E>> L = new SinglyLinkedList<Vertex<E>>();
+			OrderedPair<Iterable<Vertex<E>>, Integer> result = null;
+			Vertex<E> u = this.getVertex(label);
+			Queue<Vertex<E>> Q = new DoublyLinkedQueue<>();
+			Vertex<E> v = this.getVertex(label);
+
+			
+			u.visit();
+			Q.enqueue(u);
+			while(!Q.isEmpty()) {
+				v = Q.dequeue();
+				if (!v.isVisited()) {
+					v.visit();
+					L.add(v);
+					for (Edge<E> e : v.edges()) {
+						Q.enqueue(e.getEndVertex());
+					}
+				}
+			}
+			result = new OrderedPairImp<>(L, L.size());
+			return result;
+		}
+	}
+	
+	
 }

@@ -1,5 +1,7 @@
 package edu.uprm.cse.ds.graph;
 
+import edu.uprm.cse.ds.util.OrderedPair;
+
 public interface Graph<E> {
 	
 	public Iterable<Vertex<E>> getVertices();
@@ -25,6 +27,9 @@ public interface Graph<E> {
 	public int vertexCount();
 	
 	public int edgeCount();
+		
+	public OrderedPair<Iterable<Vertex<E>>, Integer> depthFirstSearch(E label);
 	
-	public Iterable<Vertex<E>> depthFirstSearch(E label);
+	public OrderedPair<Iterable<Vertex<E>>, Integer> breathFirstSearch(E label);
+
 }
