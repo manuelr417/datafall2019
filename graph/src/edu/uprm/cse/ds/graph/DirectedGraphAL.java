@@ -1,5 +1,10 @@
 package edu.uprm.cse.ds.graph;
 
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.uprm.cse.ds.hashtable.HashtableSC;
 import edu.uprm.cse.ds.list.List;
 import edu.uprm.cse.ds.list.SinglyLinkedList;
 import edu.uprm.cse.ds.queue.DoublyLinkedQueue;
@@ -197,6 +202,176 @@ public class DirectedGraphAL<E> implements Graph<E> {
 			return result;
 		}
 	}
-	
+
+	@Override
+	public Map<E, Iterable<Edge<E>>> shortestPathDijkstra(E source) {
+		Map<E, Iterable<Edge<E>>> result = new HashMap<>(this.vertexCount());
+		// Initialize C
+		Map<String, Double> C = null;
+		Map<E, Double> D= null;
+		Map<E, E> predecessors = null;
+		C = this.initC();
+
+		D = this.initD(source, C);
+		predecessors = this.initPredecessors(source);
+		
+		Vertex<E> v = this.getVertex(source);
+		Vertex<E> u = null;
+		v.visit();
+		//predecessors.put(v.getLabel(), v.getLabel());
+		int counter = this.vertexCount();
+		for (int i=0; i <counter; ++i) {
+			u = finMinUnvisited(D);
+			if (u != null) {
+				u.visit();
+				for (Vertex<E> v2: u.neighbors()) {
+					this.relax(u, v2, D, C, predecessors);
+				}
+			}
+		}
+		result = this.buildBackPath(v, this.getVertices(), this.vertexList.size(), predecessors);
+		return result;
+	}
+
+
+
+
+	private Map<E, E> initPredecessors(E source) {
+		Map<E, E> result = new HashMap<>(this.vertexCount());
+		
+		for (Vertex<E> v : this.vertexList) {
+			if (!v.getLabel().equals(source)) {
+				result.put(v.getLabel(), source);
+			}
+		}
+		return result;
+	}
+
+	private Map<E, Iterable<Edge<E>>> buildBackPath(Vertex<E> source, Iterable<Vertex<E>> vertices, int vertexCount, Map<E, E> predecessors) {
+		Map<E, Iterable<Edge<E>>> result = new HashMap<>(vertexCount);
+		List<Edge<E>> path = null;
+		E predecessor = null;
+		System.out.println("SOURC: " + source.getLabel());
+		for (Vertex<E> v : vertices) {
+			path = new SinglyLinkedList<>();
+			boolean done = false;
+			Vertex<E> u = v;
+			while (!done) {
+				predecessor = predecessors.get(u.getLabel());
+				if (predecessor != null) {
+					path.add(this.getEdge(predecessor, u.getLabel()), 0);
+					u = this.getVertex(predecessor);
+					if (source.getLabel().equals(predecessor)) {
+						done = true; // we reach the source node
+					}
+				}
+				else {
+					// no way to reach v from the source
+					done = true;
+				}
+			}
+			result.put(v.getLabel(), path);
+		}
+		return result;
+	}
+
+	private void relax(Vertex<E> u, Vertex<E> v, Map<E, Double> D, Map<String, Double> C, 
+			Map<E, E> predecessors) {
+		OrderedPair<E, E> p = null;
+		p = new OrderedPairImp<>(u.getLabel(), v.getLabel());
+		double vDist = 0.0, uDist = 0.0, uvDist = 0.0;
+		
+		vDist = D.get(v.getLabel());
+		uDist = D.get(u.getLabel());
+		uvDist = C.get(p.toString());
+		
+		if (vDist > (uDist + uvDist)) {
+			D.put(v.getLabel(), uDist + uvDist);
+			predecessors.put(v.getLabel(), u.getLabel());
+		}
+		
+	}
+
+	private Vertex<E> finMinUnvisited(Map<E, Double> D) {
+		double min = Double.POSITIVE_INFINITY;
+		Vertex<E> minV =null;
+		for (Vertex<E> v : this.unVisited()) {
+			if (D.get(v.getLabel()) < min){
+				min = 	D.get(v.getLabel());
+				minV = v;
+			}
+		}
+		return minV;
+	}
+
+	private Map<String, Double> initC() {
+		Map<String, Double>  result= new HashMap<>(this.vertexCount());
+		OrderedPair<E, E> p = null;
+		// initialize all pairs of edges
+		for (Vertex<E> u : this.vertexList) {
+			for (Vertex<E> v: this.vertexList) {
+				p = new OrderedPairImp<E, E>(u.getLabel(), v.getLabel());
+				
+
+				if (u.equals(v)) {
+					System.out.printf("(%s, %s) - %f \n", p.getFirst(), p.getSecond(), 0.0);
+					result.put(p.toString(), new Double(0.0));
+				}
+				else {
+					System.out.printf("(%s, %s) - %f \n", p.getFirst(), p.getSecond(), this.getWeight(u.getLabel(), v.getLabel()));
+
+					result.put(p.toString(), new Double(this.getWeight(u.getLabel(), v.getLabel())));
+				}
+			}
+		}
+		return result;
+	}
+
+	private Map<E, Double> initD(E source, Map<String, Double> C) {
+		 Map<E, Double> D = new HashMap<>(this.vertexCount());
+		 OrderedPair<E, E> p = null;
+		 for (Vertex<E> v: this.vertexList) {
+			 if (!v.getLabel().equals(source)) {
+				 p = new OrderedPairImp<E, E>(source, v.getLabel());
+				 System.out.printf("(%s, %s) \n", p.getFirst(), p.getSecond());
+				 if (C.get(p.toString()) == null) {
+					 System.out.printf("PR libre\n");
+ 
+				 }
+				 D.put(v.getLabel(), C.get(p.toString()).doubleValue());
+			 }
+		 }
+		return D;
+	}
+
+	@Override
+	public Iterable<Vertex<E>> unVisited() {
+		List<Vertex<E>> L = new SinglyLinkedList<>();
+		for (Vertex<E> v : this.vertexList) {
+			if (!v.isVisited()) {
+				L.add(v);
+			}
+		}
+		return L;
+	}
+
+	@Override
+	public void print(PrintStream P) {
+		for (Vertex<E> v: this.vertexList) {
+			P.print(v.getLabel()+ ": ");
+			for (Vertex<E> u: v.neighbors()) {
+				P.printf("(%s, %s, %f)  ", v.getLabel(), u.getLabel(), this.getWeight(v.getLabel(), u.getLabel()));
+			}
+			P.println();
+		}
+	}
+
+	@Override
+	public void unvisitAll() {
+		for (Vertex<E> v : this.vertexList) {
+			v.unVisit();
+		}
+		
+	}
 	
 }

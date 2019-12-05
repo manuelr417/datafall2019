@@ -28,5 +28,10 @@ public class OrderedPairImp<T, E> implements OrderedPair<T, E> {
 		return this.getFirst().equals(p.getFirst()) &&
 				this.getSecond().equals(p.getSecond());
 	}
+	
+	@Override
+	public String toString() {
+		return "(" + this.first + "," + this.second + ")";
+	}
 
 }

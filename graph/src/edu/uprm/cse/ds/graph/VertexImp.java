@@ -58,7 +58,7 @@ public class VertexImp<E> implements Vertex<E> {
 	}
 
 	@Override
-	public Iterable<Vertex<E>> neighboors() {
+	public Iterable<Vertex<E>> neighbors() {
 		List<Vertex<E>> result = new SinglyLinkedList<Vertex<E>>();
 		
 		for (Edge<E> e : this.adjacencyList) {

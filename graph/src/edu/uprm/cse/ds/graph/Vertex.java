@@ -14,7 +14,7 @@ public interface Vertex<E> {
 	
 	public boolean connectEdge(Vertex<E> v);
 	
-	public Iterable<Vertex<E>> neighboors();
+	public Iterable<Vertex<E>> neighbors();
 	
 	public Iterable<Edge<E>> edges();
 	

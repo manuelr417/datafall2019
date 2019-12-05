@@ -1,5 +1,8 @@
 package edu.uprm.cse.ds.graph;
 
+import java.io.PrintStream;
+import java.util.Map;
+
 import edu.uprm.cse.ds.util.OrderedPair;
 
 public interface Graph<E> {
@@ -31,5 +34,12 @@ public interface Graph<E> {
 	public OrderedPair<Iterable<Vertex<E>>, Integer> depthFirstSearch(E label);
 	
 	public OrderedPair<Iterable<Vertex<E>>, Integer> breathFirstSearch(E label);
-
+	
+	public Map<E, Iterable<Edge<E>>> shortestPathDijkstra(E source);
+	
+	public Iterable<Vertex<E>> unVisited();
+	
+	public void print(PrintStream P);
+	
+	public void unvisitAll();
 }
